@@ -1,19 +1,42 @@
-import { CookieOptions, Request, Response } from "express";
+import { CookieOptions, NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/AuthModels";
 import { generateAccessToken, generateRefreshToken } from "../utils/functions";
+import { loginSchema, registerSchema } from "../validators/userSchema";
+import createHttpError from "http-errors";
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email, password, username } = req.body;
+
   try {
-    const { username, email, password } = req.body;
+    await registerSchema.validateAsync(req.body);
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "ایمیل مورد نظر قبلاً ثبت‌نام شده است." });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      username,
+    });
+
     await newUser.save();
 
-    const accessToken = generateAccessToken(String(newUser._id));
-    const refreshToken = generateRefreshToken(String(newUser._id));
+    const user = await User.findOne({ email });
+
+    const accessToken = generateAccessToken(String(newUser?._id));
+    const refreshToken = generateRefreshToken(String(newUser?._id));
 
     newUser.refreshToken = refreshToken;
     await newUser.save();
@@ -32,21 +55,26 @@ export const register = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(201)
-      .json({ message: "User registered successfully", user: newUser });
+    res.status(201).json({ message: "ثبت نام موفق بود", user });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user" });
+    console.error(error);
+    res.status(500).json({ message: "خطایی رخ داده است." });
+    next();
   }
 };
 
 export const login = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+  const { email, password } = req.body;
+  await loginSchema.validateAsync(req.body);
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw createHttpError.NotFound("کاربری یافت نشد");
+    }
+    const validPassword = bcrypt.compareSync(password, user.password);
+    if (!validPassword) {
+      return createHttpError.InternalServerError("رمز عبور اشتباه است");
     }
 
     const accessToken = generateAccessToken(String(user._id));
