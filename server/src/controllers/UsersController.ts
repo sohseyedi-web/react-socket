@@ -18,29 +18,13 @@ export const userProfile = async (
   next: NextFunction
 ) => {
   const token = req.cookies.accessToken;
-
-  if (!token) {
-    res.status(401).json({ message: "توکن وجود ندارد" });
-  }
-
   try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY!) as {
-      userId: string;
-    };
-
+    const decoded = jwt.decode(token) as any;
     const user = await User.findById(decoded.userId);
-    if (!user) {
-      res.status(404).json({ message: "کاربر یافت نشد" });
-    }
-
     res.status(200).json(user);
+    next();
   } catch (error) {
     console.error(error);
-
-    if (error instanceof jwt.JsonWebTokenError) {
-      res.status(401).json({ message: "توکن نامعتبر است" });
-    }
-
-    res.status(500).json({ message: "خطای سرور" });
+    res.status(401).json({ message: "توکن نامعتبر است" });
   }
 };
