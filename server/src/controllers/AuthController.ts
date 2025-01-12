@@ -133,20 +133,19 @@ export const refresh = async (req: Request, res: Response) => {
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET_KEY!
-    ) as {
-      userId: string;
-    };
+    ) as { userId: string };
+
     const newAccessToken = generateAccessToken(decoded.userId);
 
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      maxAge: 45 * 60 * 1000,
     });
 
-    res.json({ accessToken: newAccessToken });
+    return res.status(200).json({ accessToken: newAccessToken });
   } catch (error) {
-    res.status(403).json({ message: "Invalid refresh token" });
+    return res.status(403).json({ message: "Invalid refresh token" });
   }
 };
