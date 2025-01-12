@@ -138,6 +138,13 @@ export const refresh = async (req: Request, res: Response) => {
     };
     const newAccessToken = generateAccessToken(decoded.userId);
 
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+
     res.json({ accessToken: newAccessToken });
   } catch (error) {
     res.status(403).json({ message: "Invalid refresh token" });
