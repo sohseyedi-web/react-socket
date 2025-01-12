@@ -20,7 +20,7 @@ export const userProfile = async (
   const token = req.cookies.accessToken;
   try {
     const decoded = jwt.decode(token) as any;
-    const user = await User.findById(decoded.userId);
+    const user = await User.findById(decoded?.userId);
     res.status(200).json(user);
     next();
   } catch (error) {
