@@ -1,10 +1,15 @@
 import SidebarLayout from "../SidebarLayout";
 import { RiMenu2Line } from "react-icons/ri";
 import UserLink from "./UserLink";
-import { useDetailUser } from "@/hooks/users/useUser";
+import { useAllUsers, useDetailUser } from "@/hooks/users/useUser";
 
 const Sidebar = () => {
-  const { data } = useDetailUser();
+  const { users } = useAllUsers();
+  const {
+    user: { _id: userId },
+  } = useDetailUser();
+
+  const filterUsers = users?.filter((item: any) => item?._id !== userId);
 
   return (
     <SidebarLayout>
@@ -16,13 +21,15 @@ const Sidebar = () => {
         />
       </div>
       <ul className="flex flex-col gap-y-4 w-full">
-        <UserLink
-          to={`/${data?.data?._id}-${"135976412165464"}`}
-          username={data?.data?.username}
-          fullname={data?.data?.email}
-          src={data?.data?.profilePicture}
-          key={data?.data?._id}
-        />
+        {filterUsers?.map((user: any) => (
+          <UserLink
+            to={`/${user?._id}-${userId}`}
+            username={user?.username}
+            fullname={user?.email}
+            src={user?.profilePicture}
+            key={user?._id}
+          />
+        ))}
       </ul>
     </SidebarLayout>
   );
