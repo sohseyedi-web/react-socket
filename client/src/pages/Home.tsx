@@ -1,17 +1,19 @@
-import api from "@/service/https";
+import Chats from "@/features/chats/Chats";
+import { useDetailUser } from "@/hooks/users/useUser";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const fetchData = async () => {
-    const { data } = await api.get("/users/profile");
-    console.log(data);
-  };
+  const { user } = useDetailUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!user) {
+      navigate("/join", { replace: true });
+    }
+  }, [user, navigate]);
 
-  return <div>Home</div>;
+  return <Chats />;
 };
 
 export default Home;
