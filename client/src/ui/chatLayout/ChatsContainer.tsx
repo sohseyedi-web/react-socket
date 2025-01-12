@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 
 const ChatsContainer = () => {
   return (
-    <section className="max-w-7xl mx-auto bg-gray-200 h-screen container" dir="ltr">
+    <section className="max-w-7xl mx-auto bg-gray-200 h-screen overflow-y-hidden container" dir="ltr">
       <div className="flex">
         <Sidebar />
         <div className="flex-1 bg-gray-300 h-screen">
