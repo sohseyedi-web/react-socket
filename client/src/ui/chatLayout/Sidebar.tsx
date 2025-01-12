@@ -1,7 +1,9 @@
+import { useState } from "react";
 import SidebarLayout from "../SidebarLayout";
 import { RiMenu2Line } from "react-icons/ri";
 import UserLink from "./UserLink";
 import { useAllUsers, useDetailUser } from "@/hooks/users/useUser";
+import { UserTypes } from "@/types";
 
 const Sidebar = () => {
   const { users } = useAllUsers();
@@ -9,7 +11,14 @@ const Sidebar = () => {
     user: { _id: userId },
   } = useDetailUser();
 
-  const filterUsers = users?.filter((item: any) => item?._id !== userId);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredUsers = users?.filter(
+    (user: UserTypes) =>
+      user?._id !== userId &&
+      (user?.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user?.email.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   return (
     <SidebarLayout>
@@ -18,18 +27,21 @@ const Sidebar = () => {
         <input
           className="w-full h-[45px] outline-none rounded-[18px] border-2 border-zinc-300 px-3"
           placeholder="Search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
       <ul className="flex flex-col gap-y-4 w-full">
-        {filterUsers?.map((user: any) => (
-          <UserLink
-            to={`/${user?._id}-${userId}`}
-            username={user?.username}
-            fullname={user?.email}
-            src={user?.profilePicture}
-            key={user?._id}
-          />
-        ))}
+        {searchTerm &&
+          filteredUsers?.map((user: UserTypes) => (
+            <UserLink
+              to={`/${user?._id}-${userId}`}
+              username={user?.username}
+              fullname={user?.email}
+              src={user?.profilePicture}
+              key={user?._id}
+            />
+          ))}
       </ul>
     </SidebarLayout>
   );
