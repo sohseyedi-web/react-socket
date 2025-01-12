@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Messages = () => {
-  const currentUserId = "123";
+type MessageProps = {
+  userId: string;
+};
+
+const Messages = ({ userId }: MessageProps) => {
 
   const [messages, setMessages] = useState([
     {
       id: 1,
       text: "سلام!",
-      senderId: "123",
+      senderId: userId,
       senderImg: "https://i.pravatar.cc/40?img=1",
       timestamp: "10:30 AM",
     },
@@ -21,7 +24,7 @@ const Messages = () => {
     {
       id: 3,
       text: "خوبم، تو چطوری؟",
-      senderId: "123",
+      senderId: userId,
       senderImg: "https://i.pravatar.cc/40?img=1",
       timestamp: "10:35 AM",
     },
@@ -33,11 +36,11 @@ const Messages = () => {
         <div
           key={msg.id}
           className={`flex items-end gap-2 ${
-            msg.senderId === currentUserId ? "justify-end" : "justify-start"
+            msg.senderId === userId ? "justify-end" : "justify-start"
           }`}
         >
           {/* عکس فرستنده پیام */}
-          {msg.senderId !== currentUserId && (
+          {msg.senderId !== userId && (
             <img
               src={msg.senderImg}
               alt="User"
@@ -48,7 +51,7 @@ const Messages = () => {
           {/* محتوای پیام */}
           <div
             className={`p-2 rounded-md shadow-md min-w-[100px] max-w-[200px] break-words flex flex-col ${
-              msg.senderId === currentUserId
+              msg.senderId === userId
                 ? "bg-blue-500 text-white rounded-tl-2xl"
                 : "bg-gray-300 text-black rounded-tr-2xl"
             }`}
@@ -60,7 +63,7 @@ const Messages = () => {
           </div>
 
           {/* عکس برای پیام‌های خود کاربر */}
-          {msg.senderId === currentUserId && (
+          {msg.senderId === userId && (
             <img
               src={msg.senderImg}
               alt="User"
