@@ -10,7 +10,9 @@ export const useDetailUser = () => {
     retry: false,
   });
 
-  return { data, isLoading };
+  const user = data?.data || {};
+
+  return { user, isLoading };
 };
 export const useAllUsers = () => {
   const { data, isLoading } = useQuery({
@@ -19,7 +21,9 @@ export const useAllUsers = () => {
     retry: false,
   });
 
-  return { data, isLoading };
+  const users = data?.data?.user || {};
+
+  return { users, isLoading };
 };
 
 export const useLogOut = () => {
