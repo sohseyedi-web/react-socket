@@ -21,7 +21,7 @@ export const useAllUsers = () => {
     retry: false,
   });
 
-  const users = data?.data?.user || {};
+  const users = data?.data?.user;
 
   return { users, isLoading };
 };
