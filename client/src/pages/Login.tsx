@@ -32,10 +32,10 @@ const Login = () => {
       if (!validateForm()) {
         toast.error("لطفا خطا ها رو برطرف کن");
         setIsSubmit(true);
-        navigate("/", { replace: true });
       }
 
       await mutateAsync();
+      navigate("/", { replace: true });
       toast.success("خوش اومدی دوست من");
     } catch (error) {
       console.log(error);
