@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { CookieOptions, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/AuthModels";
@@ -75,13 +75,37 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const logout = (res: Response) => {
+  const cookieOptions: CookieOptions = {
+    maxAge: 1,
+    expires: new Date(Date.now()),
+    httpOnly: true,
+    signed: true,
+    sameSite: "lax",
+    secure: true,
+    path: "/",
+    domain:
+      process.env.NODE_ENV === "development" ? "localhost" : ".example.ir",
+  };
+  res.cookie("accessToken", null, cookieOptions);
+  res.cookie("refreshToken", null, cookieOptions);
+
+  return res.status(200).json({
+    StatusCode: 200,
+    message: "با موفقیت خارج شدی",
+  });
+};
+
 export const refresh = async (req: Request, res: Response) => {
   try {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken)
       return res.status(403).json({ message: "No refresh token" });
 
-    const decoded = jwt.verify(refreshToken, process.env.TOKEN_SECRET_KEY!) as {
+    const decoded = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET_KEY!
+    ) as {
       userId: string;
     };
     const newAccessToken = generateAccessToken(decoded.userId);
