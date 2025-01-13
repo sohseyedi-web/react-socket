@@ -4,14 +4,13 @@ import Messages from "./Messages";
 import { IoSend } from "react-icons/io5";
 
 const Room = () => {
-
-  const { user } = useDetailUser()
+  const { user } = useDetailUser();
 
   return (
     <section className="flex flex-col h-screen">
       <HeaderRoom />
       <div className="flex-1 overflow-y-auto p-3">
-        <Messages userId={user?._id}/>
+        <Messages userId={user?._id} />
       </div>
       <form className="w-full bg-gray-950 py-2 px-3 flex items-center">
         <input
