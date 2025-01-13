@@ -36,7 +36,7 @@ const TextField = ({
         />
       </div>
       {error && (isTouched || isSubmit) ? (
-        <p className="text-red-500 absolute top-1/2 -translate-y-1/2 left-2 font-semibold text-sm transition-all duration-200">
+        <p className="text-red-500 absolute top-1/2 -translate-y-1/2 right-2 font-semibold text-sm transition-all duration-200">
           {error}
         </p>
       ) : null}
