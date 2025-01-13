@@ -42,10 +42,9 @@ const Sidebar = () => {
           filteredUsers?.map((user: UserTypes) => (
             <UserLink
               to={`/${user?._id}-${userId}`}
-              username={user?.username}
-              fullname={user?.email}
-              src={user?.profilePicture}
+              user={user}
               key={user?._id}
+              currentUser={userId}
             />
           ))}
       </ul>
