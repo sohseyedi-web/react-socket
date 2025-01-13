@@ -23,15 +23,15 @@ const Sidebar = () => {
   return (
     <SidebarLayout>
       <div className="flex items-center gap-x-2 p-3">
-        <RiMenu2Line size={32} className="text-zinc-300 cursor-pointer" />
+        <RiMenu2Line size={38} className="text-zinc-500 cursor-pointer" />
         <input
-          className="w-full h-[45px] outline-none rounded-[18px] border-2 border-zinc-300 px-3"
+          className="w-full h-[45px] outline-none rounded-[18px] border border-zinc-400 px-3"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <ul className="flex flex-col gap-y-4 w-full">
+      <ul className="flex flex-col w-full">
         {searchTerm &&
           filteredUsers?.map((user: UserTypes) => (
             <UserLink
