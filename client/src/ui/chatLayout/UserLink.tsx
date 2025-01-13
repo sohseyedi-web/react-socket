@@ -9,7 +9,7 @@ type CustomLinkProps = {
 
 const UserLink = ({ username, to, src, fullname }: CustomLinkProps) => {
   const navlinkClass =
-    "flex gap-x-2 items-center text-white w-full p-3 hover:bg-zinc-600  hover:bg-zinc-600 transition-all duration-300";
+    "flex gap-x-2 items-center w-full p-3 hover:bg-zinc-600  hover:text-zinc-100 transition-all duration-300";
 
   return (
     <li className="w-full">
@@ -17,8 +17,8 @@ const UserLink = ({ username, to, src, fullname }: CustomLinkProps) => {
         to={to}
         className={({ isActive }) =>
           isActive
-            ? `${navlinkClass} bg-zinc-800`
-            : `${navlinkClass}`
+            ? `${navlinkClass} bg-zinc-700 text-zinc-100`
+            : `${navlinkClass} text-zinc-700`
         }
       >
         <img
