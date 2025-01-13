@@ -4,6 +4,7 @@ import { RiMenu2Line } from "react-icons/ri";
 import UserLink from "./UserLink";
 import { useAllUsers, useDetailUser } from "@/hooks/users/useUser";
 import { UserTypes } from "@/types";
+import { useResponsiveStore } from "@/store/useStore";
 
 const Sidebar = () => {
   const { users } = useAllUsers();
@@ -12,6 +13,7 @@ const Sidebar = () => {
   } = useDetailUser();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const { active, setActive } = useResponsiveStore();
 
   const filteredUsers = users?.filter(
     (user: UserTypes) =>
@@ -23,7 +25,11 @@ const Sidebar = () => {
   return (
     <SidebarLayout>
       <div className="flex items-center gap-x-2 p-3">
-        <RiMenu2Line size={38} className="text-zinc-500 cursor-pointer" />
+        <RiMenu2Line
+          onClick={() => setActive(!active)}
+          size={38}
+          className="text-zinc-500 cursor-pointer"
+        />
         <input
           className="w-full h-[45px] outline-none rounded-[18px] border border-zinc-400 px-3"
           placeholder="Search"
