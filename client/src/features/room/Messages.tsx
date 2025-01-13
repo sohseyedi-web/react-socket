@@ -53,7 +53,7 @@ const Messages = ({ userId }: MessageProps) => {
             className={`p-2 rounded-md shadow-md min-w-[100px] max-w-[200px] break-words flex flex-col ${
               msg.senderId === userId
                 ? "bg-blue-500 text-white rounded-tl-2xl"
-                : "bg-gray-300 text-black rounded-tr-2xl"
+                : "bg-zinc-700 text-white rounded-tr-2xl"
             }`}
           >
             <span className="text-right">{msg.text}</span>
