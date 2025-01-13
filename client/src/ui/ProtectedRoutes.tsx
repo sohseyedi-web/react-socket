@@ -1,25 +1,23 @@
 import { useDetailUser } from "@/hooks/users/useUser";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading, user } = useDetailUser();
+  const { user } = useDetailUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate("/join", { replace: true });
-    } else {
-      navigate("/");
+    if (user._id) {
+      navigate("/", { replace: true });
     }
   }, [user]);
 
-  if (isLoading) {
-    return <Loading full={true} />;
-  }
-
-  return children ? children : <Outlet />;
+  return (
+    <Suspense fallback={<Loading full={true} />}>
+      {children ? children : <Outlet />}
+    </Suspense>
+  );
 };
 
 export default ProtectedRoute;
