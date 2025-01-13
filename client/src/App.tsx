@@ -5,8 +5,17 @@ import Register from "@/pages/Register";
 import ChatsContainer from "@/ui/chatLayout/ChatsContainer";
 import Room from "@/features/room/Room";
 import ProtectedRoute from "./ui/ProtectedRoutes";
+import { useEffect } from "react";
+import { useResponsiveStore } from "./store/useStore";
 
 function App() {
+  const { updateMedia } = useResponsiveStore();
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  }, [updateMedia]);
+
   return (
     <BrowserRouter>
       <Routes>
