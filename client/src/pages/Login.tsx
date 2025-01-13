@@ -30,28 +30,30 @@ const Login = () => {
     e.preventDefault();
     try {
       if (!validateForm()) {
-        toast.error("لطفا خطا ها رو برطرف کن");
+        toast.error("Please fix the errors.");
         setIsSubmit(true);
+        return;
       }
 
       await mutateAsync();
       navigate("/", { replace: true });
-      toast.success("خوش اومدی دوست من");
+      toast.success("Welcome back!");
     } catch (error) {
       console.log(error);
+      toast.error("Login failed. Please try again.");
     }
   };
 
   return (
     <AuthContainer>
-      <h6 className="lg:text-lg font-semibold text-zinc-700">خوش اومدی</h6>
+      <h6 className="lg:text-lg font-semibold text-zinc-700">Welcome back!</h6>
       <p className="lg:text-base text-zinc-600 my-3 text-sm">
-        حالا میتونی وارد حساب کاربریت بشی
+        You can now log in to your account.
       </p>
       <form className="space-y-7 my-5" onSubmit={onSubmit}>
         <TextField
           isSubmit={isSubmit}
-          placeHolder="ایمیل"
+          placeHolder="Email"
           error={errors.email}
           value={values.email}
           type="email"
@@ -60,33 +62,33 @@ const Login = () => {
         />
         <TextField
           isSubmit={isSubmit}
-          placeHolder="رمز عبور"
+          placeHolder="Password"
           error={errors.password}
           value={values.password}
           type="password"
           onChange={(val) => handleChange("password", val)}
           icon={<LuLock size={24} className="text-zinc-600" />}
         />
-        <ButtonAction title="ورود به حساب" loading={isPending} />
+        <ButtonAction title="Log in" loading={isPending} />
       </form>
       <div className="h-0.5 w-full bg-zinc-200 my-3"></div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2 justify-center text-zinc-600 mb-3">
-          حساب کاربری نساختی؟
+          Don't have an account?
           <Link
             to="/register"
             className="text-zinc-800 underline font-semibold"
           >
-            ثبت نام
+            Sign up
           </Link>
         </div>
         <div className="flex items-center gap-x-2 justify-center text-zinc-600 mb-3">
-          رمز عبور یادت رفته؟
+          Forgot your password?
           <Link
-            to="/register"
+            to="/forgot-password"
             className="text-zinc-800 underline font-semibold"
           >
-            فراموشی رمز
+            Reset password
           </Link>
         </div>
       </div>
