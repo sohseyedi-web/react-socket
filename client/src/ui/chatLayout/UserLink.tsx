@@ -1,18 +1,29 @@
+import { useCreateRoom } from "@/hooks/rooms/useRooms";
+import { UserTypes } from "@/types";
 import { NavLink } from "react-router-dom";
 
 type CustomLinkProps = {
   to: string;
-  src: string;
-  username: string;
-  fullname: string;
+  user: UserTypes;
+  currentUser: string;
 };
 
-const UserLink = ({ username, to, src, fullname }: CustomLinkProps) => {
+const UserLink = ({ to, user, currentUser }: CustomLinkProps) => {
   const navlinkClass =
     "flex gap-x-2 items-center w-full p-3 hover:bg-zinc-600  hover:text-zinc-100 transition-all duration-300";
 
+  const { createRoom } = useCreateRoom();
+
+  const onCreate = async () => {
+    try {
+      await createRoom({ userId1: user?._id, userId2: currentUser });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <li className="w-full">
+    <li className="w-full" onClick={onCreate}>
       <NavLink
         to={to}
         className={({ isActive }) =>
@@ -23,15 +34,15 @@ const UserLink = ({ username, to, src, fullname }: CustomLinkProps) => {
       >
         <img
           src={
-            src ||
+            user?.profilePicture ||
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
           }
-          alt={username}
+          alt={user?.username}
           className="object-cover rounded-2xl size-12"
         />
         <div className="flex flex-col items-start">
-          <h4>{username}</h4>
-          <p>{fullname}</p>
+          <h4>{user?.username}</h4>
+          <p>{user?.email}</p>
         </div>
       </NavLink>
     </li>
