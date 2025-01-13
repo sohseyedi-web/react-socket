@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { z, ZodTypeAny } from "zod";
 
 // Constant Message
-const MESSAGE_ERROR = (val: string) => `وارد کردن ' ${val} ' ضروری است`;
-const INVALID_ERROR = (val: string) => `'${val}' وارد شده کوتاه است.`;
+const MESSAGE_ERROR = (val: string) => `The '${val}' field is required.`;
+const ENGLISH_ERROR = `The text entered is not 'English'`;
+const INVALID_ERROR = (val: string) => `The '${val}' entered is too short.`;
 
 export function useValid<T extends ZodTypeAny>(
   initialValues: z.infer<T>,
@@ -66,24 +67,26 @@ export function useValid<T extends ZodTypeAny>(
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(1, MESSAGE_ERROR("ایمیل"))
-    .email('"ایمیل" وارد شده معتبر نمی‌باشد.'),
+    .min(1, MESSAGE_ERROR("Email"))
+    .email('The "Email" entered is not valid.'),
   password: z
     .string()
-    .min(1, MESSAGE_ERROR("رمز عبور"))
-    .min(4, INVALID_ERROR("رمز عبور")),
+    .min(1, MESSAGE_ERROR("Password"))
+    .min(4, INVALID_ERROR("Password")),
 });
+
 export const registerSchema = z.object({
   username: z
     .string()
-    .min(1, MESSAGE_ERROR("نام کاربری"))
-    .min(4, INVALID_ERROR("نام کاربری")),
+    .min(1, MESSAGE_ERROR("Username"))
+    .min(4, INVALID_ERROR("Username"))
+    .regex(/^[a-zA-Z0-9_.]+$/, ENGLISH_ERROR),
   email: z
     .string()
-    .min(1, MESSAGE_ERROR("ایمیل"))
-    .email('"ایمیل" وارد شده معتبر نمی‌باشد.'),
+    .min(1, MESSAGE_ERROR("Email"))
+    .email('The "Email" entered is not valid.'),
   password: z
     .string()
-    .min(1, MESSAGE_ERROR("رمز عبور"))
-    .min(4, INVALID_ERROR("رمز عبور")),
+    .min(1, MESSAGE_ERROR("password"))
+    .min(4, INVALID_ERROR("Password")),
 });
