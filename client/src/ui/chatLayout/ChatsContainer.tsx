@@ -3,10 +3,10 @@ import Sidebar from "./Sidebar";
 
 const ChatsContainer = () => {
   return (
-    <section className="max-w-7xl mx-auto bg-gray-200 h-screen overflow-y-hidden container" dir="ltr">
+    <section className="h-screen overflow-y-hidden">
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 bg-gray-300 h-screen">
+        <div className="flex-1 h-screen">
           <Outlet />
         </div>
       </div>
