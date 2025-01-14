@@ -1,46 +1,35 @@
-import { useState } from "react";
+import { MessageTypes } from "@/types";
+import { formatTime } from "@/utils/formatDate";
+import { useEffect, useRef } from "react";
 
 type MessageProps = {
-  userId: string;
+  currentUser: string;
+  messages: MessageTypes[];
 };
 
-const Messages = ({ userId }: MessageProps) => {
+const Messages = ({ currentUser, messages }: MessageProps) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "سلام!",
-      senderId: userId,
-      senderImg: "https://i.pravatar.cc/40?img=1",
-      timestamp: "10:30 AM",
-    },
-    {
-      id: 2,
-      text: "چطوری؟",
-      senderId: "456",
-      senderImg: "https://i.pravatar.cc/40?img=2",
-      timestamp: "10:32 AM",
-    },
-    {
-      id: 3,
-      text: "خوبم، تو چطوری؟",
-      senderId: userId,
-      senderImg: "https://i.pravatar.cc/40?img=1",
-      timestamp: "10:35 AM",
-    },
-  ]);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages]);
 
   return (
     <>
       {messages.map((msg) => (
         <div
-          key={msg.id}
-          className={`flex items-end gap-2 ${
-            msg.senderId === userId ? "justify-end" : "justify-start"
+          key={msg._id}
+          className={`flex items-center  my-2 gap-2 ${
+            msg.sender === currentUser ? "justify-end" : "justify-start"
           }`}
         >
-          {/* عکس فرستنده پیام */}
-          {msg.senderId !== userId && (
+          {msg.sender !== currentUser && (
             <img
               src={msg.senderImg}
               alt="User"
@@ -48,22 +37,25 @@ const Messages = ({ userId }: MessageProps) => {
             />
           )}
 
-          {/* محتوای پیام */}
-          <div
-            className={`p-2 rounded-md shadow-md min-w-[100px] max-w-[200px] break-words flex flex-col ${
-              msg.senderId === userId
-                ? "bg-blue-500 text-white rounded-tl-2xl"
-                : "bg-zinc-700 text-white rounded-tr-2xl"
-            }`}
-          >
-            <span className="text-right">{msg.text}</span>
-            <span className="text-xs text-gray-200 text-right">
-              {msg.timestamp}
+          <div className="flex flex-col">
+            <div
+              className={`px-2 py-3 rounded-md shadow-md min-w-[100px] max-w-[200px] break-words flex flex-col ${
+                msg.sender === currentUser
+                  ? "bg-blue-500 text-white rounded-tl-2xl"
+                  : "bg-zinc-700 text-white rounded-tr-2xl"
+              }`}
+            >
+              <span className="text-right">{msg.message}</span>
+            </div>
+            <span
+              className={`text-xs font-semibold text-zinc-700 ${
+                msg.sender === currentUser ? "text-right" : "text-left"
+              }  mt-1`}
+            >
+              {formatTime(msg.timestamp.toLocaleString())}
             </span>
           </div>
-
-          {/* عکس برای پیام‌های خود کاربر */}
-          {msg.senderId === userId && (
+          {msg.sender === currentUser && (
             <img
               src={msg.senderImg}
               alt="User"
@@ -72,6 +64,7 @@ const Messages = ({ userId }: MessageProps) => {
           )}
         </div>
       ))}
+      <div ref={messagesEndRef} />
     </>
   );
 };
