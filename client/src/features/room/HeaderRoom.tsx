@@ -1,16 +1,6 @@
-import { useAllUsers } from "@/hooks/users/useUser";
-import { UserTypes } from "@/types";
 import { RiMenu2Line, RiSearch2Line } from "react-icons/ri";
-import { useParams } from "react-router-dom";
 
-const HeaderRoom = () => {
-  const { roomId } = useParams();
-  const { users } = useAllUsers();
-
-  const findUser = users?.find(
-    (user: UserTypes) => user?._id === roomId?.split("-")[0]
-  );
-
+const HeaderRoom = ({ userName }: { userName: string }) => {
   return (
     <header className="lg:px-3 px-2 py-2 flex items-center justify-between">
       <div className="flex items-center gap-x-2">
@@ -26,7 +16,7 @@ const HeaderRoom = () => {
           />
         </div>
         <div className="flex flex-col">
-          <h4 className="text-lg font-medium">{findUser?.username}</h4>
+          <h4 className="text-lg font-medium">{userName}</h4>
           <span className="text-sm text-zinc-400">online</span>
         </div>
       </div>
