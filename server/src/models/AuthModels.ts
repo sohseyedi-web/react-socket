@@ -4,7 +4,7 @@ interface IUser extends mongoose.Document {
   username: string;
   email: string;
   password: string;
-  profilePicture: string;
+  profile: string;
   refreshToken: string;
 }
 
@@ -13,7 +13,11 @@ const userSchema = new mongoose.Schema<IUser>(
     username: { type: String, required: true },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    profilePicture: { type: String, default: "" },
+    profile: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    },
     refreshToken: { type: String, default: "" },
   },
   { timestamps: true }
