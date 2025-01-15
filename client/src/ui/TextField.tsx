@@ -15,10 +15,10 @@ const TextField = ({
 
   return (
     <div className="w-full relative">
-      <div className="w-full flex items-center bg-transparent justify-center gap-3 lg:h-[55px] h-[50px] rounded-[18px] border-2 border-zinc-300 px-3">
+      <div className="w-full flex items-center bg-transparent justify-center gap-3 lg:h-[55px] h-[50px] rounded-[18px] border-2 border-zinc-800 px-3">
         <span
           className={`${
-            error && isTouched ? "text-red-500" : "text-zinc-600"
+            error && (isTouched || isSubmit) ? "text-red-500" : "text-zinc-400"
           } transition-all duration-200`}
         >
           {icon}
@@ -32,7 +32,7 @@ const TextField = ({
             onChange(e.target.value);
             setIsTouched(true);
           }}
-          className="flex-1 bg-transparent outline-none lg:text-lg text-zinc-800 placeholder:text-gray-500"
+          className="flex-1 bg-transparent outline-none lg:text-lg text-zinc-100 placeholder:text-gray-500"
         />
       </div>
       {error && (isTouched || isSubmit) ? (
