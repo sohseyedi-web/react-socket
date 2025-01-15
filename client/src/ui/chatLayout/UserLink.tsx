@@ -10,7 +10,7 @@ type CustomLinkProps = {
 
 const UserLink = ({ to, user, currentUser }: CustomLinkProps) => {
   const navlinkClass =
-    "flex gap-x-2 items-center w-full p-3 hover:bg-zinc-600  hover:text-zinc-100 transition-all duration-300";
+    "flex gap-x-2 items-center w-full p-3 hover:bg-zinc-900  hover:text-zinc-100 transition-all duration-300";
 
   const { createRoom } = useCreateRoom();
 
@@ -28,8 +28,8 @@ const UserLink = ({ to, user, currentUser }: CustomLinkProps) => {
         to={to}
         className={({ isActive }) =>
           isActive
-            ? `${navlinkClass} bg-zinc-700 text-zinc-100`
-            : `${navlinkClass} text-zinc-700`
+            ? `${navlinkClass} bg-zinc-700 text-zinc-300`
+            : `${navlinkClass} text-zinc-100`
         }
       >
         <img
