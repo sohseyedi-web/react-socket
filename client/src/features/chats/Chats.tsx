@@ -3,7 +3,7 @@ import { LuMessageSquare } from "react-icons/lu";
 const Chats = () => {
   return (
     <section className="flex items-center justify-center h-screen">
-      <div className="max-w-md text-center space-y-6 text-zinc-800">
+      <div className="max-w-md text-center space-y-6 text-zinc-100">
         {/* Icon Display */}
         <div className="flex justify-center gap-4 mb-4">
           <div className="relative">
@@ -11,7 +11,7 @@ const Chats = () => {
               className="w-16 h-16 rounded-2xl flex items-center
              justify-center animate-bounce shadow-lg"
             >
-              <LuMessageSquare className="w-8 h-8 text-zinc-700" />
+              <LuMessageSquare className="w-8 h-8 text-zinc-400" />
             </div>
           </div>
         </div>
