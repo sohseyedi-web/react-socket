@@ -10,7 +10,7 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
       <aside
         className={`${
           active ? " left-0 top-0" : "-left-80 top-0"
-        } fixed z-40 w-[300px] lg:relative bg-zinc-50 h-screen lg:h-auto border-r border-zinc-400 space-y-3 transition-all duration-300`}
+        } fixed z-40 w-[300px] lg:relative bg-zinc-800 h-screen lg:h-auto border-r border-zinc-900 space-y-3 transition-all duration-300`}
       >
         {children}
       </aside>
