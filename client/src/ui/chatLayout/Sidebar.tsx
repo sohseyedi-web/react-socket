@@ -28,10 +28,10 @@ const Sidebar = () => {
         <RiMenu2Line
           onClick={() => setActive(!active)}
           size={38}
-          className="text-zinc-500 cursor-pointer"
+          className="text-zinc-300 cursor-pointer"
         />
         <input
-          className="w-full h-[45px] outline-none rounded-[18px] border border-zinc-400 px-3"
+          className="w-full h-[45px] text-zinc-200 placeholder:text-gray-400 bg-[#2A3335] outline-none rounded-[18px] border border-zinc-700 px-3"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
