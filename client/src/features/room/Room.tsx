@@ -71,22 +71,22 @@ const Room = () => {
   return (
     <section className="flex flex-col h-screen">
       <HeaderRoom userName={findUser?.username} />
-      <div className="flex-1 overflow-y-auto p-3 border-y border-zinc-400">
+      <div className="flex-1 overflow-y-auto p-3 border-y border-zinc-900">
         <Messages currentUser={currentUser || ""} messages={messages} />
       </div>
       <form
         onSubmit={onSendMessage}
-        className="w-full bg-zinc-100 py-2 px-3 flex items-center"
+        className="w-full bg-neutral-900 py-2 px-3 flex items-center"
       >
         <input
           type="text"
           placeholder="Write a message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          className="bg-transparent outline-none py-2 flex-1 text-zinc-800 text-lg"
+          className="bg-transparent outline-none py-2 flex-1 text-zinc-200 text-lg"
         />
         <button>
-          <IoSend size={32} className="text-zinc-700 cursor-pointer" />
+          <IoSend size={32} className="text-zinc-300 cursor-pointer" />
         </button>
       </form>
     </section>
