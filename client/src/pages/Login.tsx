@@ -39,15 +39,14 @@ const Login = () => {
       navigate("/", { replace: true });
       toast.success("Welcome back!");
     } catch (error) {
-      console.log(error);
       toast.error("Login failed. Please try again.");
     }
   };
 
   return (
     <AuthContainer>
-      <h6 className="lg:text-lg font-semibold text-zinc-700">Welcome back!</h6>
-      <p className="lg:text-base text-zinc-600 my-3 text-sm">
+      <h6 className="lg:text-lg font-semibold text-[#F6F4F0]">Welcome back!</h6>
+      <p className="lg:text-base text-zinc-300 my-3 text-sm">
         You can now log in to your account.
       </p>
       <form className="space-y-7 my-5" onSubmit={onSubmit}>
@@ -58,7 +57,7 @@ const Login = () => {
           value={values.email}
           type="email"
           onChange={(val) => handleChange("email", val)}
-          icon={<MdOutlineAlternateEmail size={24} className="text-zinc-600" />}
+          icon={<MdOutlineAlternateEmail size={24} />}
         />
         <TextField
           isSubmit={isSubmit}
@@ -67,28 +66,28 @@ const Login = () => {
           value={values.password}
           type="password"
           onChange={(val) => handleChange("password", val)}
-          icon={<LuLock size={24} className="text-zinc-600" />}
+          icon={<LuLock size={24} />}
         />
         <ButtonAction title="Log in" loading={isPending} />
       </form>
-      <div className="h-0.5 w-full bg-zinc-200 my-3"></div>
+      <div className="h-0.5 w-full bg-zinc-800 my-3"></div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-x-2 justify-center text-zinc-600 mb-3">
+        <div className="flex items-center gap-x-2 justify-center text-zinc-400 mb-3">
           Don't have an account?
           <Link
             to="/register"
-            className="text-zinc-800 underline font-semibold"
+            className="text-zinc-100 underline"
           >
             Sign up
           </Link>
         </div>
-        <div className="flex items-center gap-x-2 justify-center text-zinc-600 mb-3">
-          Forgot your password?
+        <div className="flex items-center gap-x-2 justify-center text-zinc-400 mb-3">
+          Forgot password?
           <Link
             to="/forgot-password"
-            className="text-zinc-800 underline font-semibold"
+            className="text-zinc-100 underline"
           >
-            Reset password
+            Reset
           </Link>
         </div>
       </div>

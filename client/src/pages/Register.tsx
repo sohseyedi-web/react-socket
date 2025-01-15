@@ -41,17 +41,16 @@ const Register = () => {
       toast.success("Welcome! Your account has been created.");
       navigate("/", { replace: true });
     } catch (error) {
-      console.log(error);
       toast.error("Registration failed. Please try again.");
     }
   };
 
   return (
     <AuthContainer>
-      <h6 className="lg:text-lg font-semibold text-zinc-700">
+      <h6 className="lg:text-lg font-semibold text-[#F6F4F0]">
         Let's get started
       </h6>
-      <p className="lg:text-base text-zinc-600 my-3 text-sm">
+      <p className="lg:text-base text-zinc-300 my-3 text-sm">
         Create your account here.
       </p>
       <form className="space-y-7 my-5" onSubmit={onSubmit}>
@@ -84,10 +83,10 @@ const Register = () => {
         />
         <ButtonAction title="Create account" loading={isPending} />
       </form>
-      <div className="h-0.5 w-full bg-zinc-200 my-3"></div>
-      <div className="flex items-center gap-x-2 justify-center text-zinc-600 mb-3">
+      <div className="h-0.5 w-full bg-zinc-800 my-3"></div>
+      <div className="flex items-center gap-x-2 justify-center text-zinc-400 mb-3">
         Already have an account?
-        <Link to="/login" className="text-zinc-800 underline font-semibold">
+        <Link to="/join" className="text-zinc-100 underline">
           Log in
         </Link>
       </div>
