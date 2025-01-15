@@ -1,11 +1,16 @@
+import { useResponsiveStore } from "@/store/useStore";
 import { RiMenu2Line, RiSearch2Line } from "react-icons/ri";
 
 const HeaderRoom = ({ userName }: { userName: string }) => {
+
+  const { active, setActive } = useResponsiveStore();
+
   return (
     <header className="lg:px-3 px-2 py-2 flex items-center justify-between">
       <div className="flex items-center gap-x-2">
         <div className="flex items-center">
           <RiMenu2Line
+            onClick={() => setActive(!active)}
             size={25}
             className="text-zinc-500 cursor-pointer lg:hidden flex mr-3"
           />
@@ -16,12 +21,12 @@ const HeaderRoom = ({ userName }: { userName: string }) => {
           />
         </div>
         <div className="flex flex-col">
-          <h4 className="text-lg font-medium">{userName}</h4>
-          <span className="text-sm text-zinc-400">online</span>
+          <h4 className="text-lg font-medium text-zinc-200">{userName}</h4>
+          <span className="text-sm text-zinc-500">online</span>
         </div>
       </div>
       <div className="flex gap-x-2">
-        <RiSearch2Line size={28} className="cursor-pointer text-zinc-500" />
+        <RiSearch2Line size={28} className="cursor-pointer text-zinc-400" />
       </div>
     </header>
   );
